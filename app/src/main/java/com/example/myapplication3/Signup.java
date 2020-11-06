@@ -14,8 +14,12 @@ import android.widget.EditText;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Signup extends Fragment {
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
 
 
@@ -62,6 +66,8 @@ public class Signup extends Fragment {
         Registerbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                rootNode = FirebaseDatabase.getInstance();
+                reference = rootNode.getReference("users");
                 String username=mUsername.getText().toString().trim();
                 String password=mPassword.getText().toString().trim();
                 String password1=mPassword1.getText().toString().trim();
@@ -114,16 +120,14 @@ public class Signup extends Fragment {
                     mPassword1.setError("Passwords do not match");
                     return;
                 }
-
-
-
-
-
-
                 if(TextUtils.isEmpty(Profession)){
                     mProf.setError("This is a required field");
                     return;
                 }
+
+                UserHelperClass helperClass = new UserHelperClass(fullname, username, password,Profession);
+                reference.child(username).setValue(helperClass);
+
 
 
                 Intent intent=new Intent(getActivity(),verification.class);

@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     public  CallbackManager callbackManager;
     private FirebaseAuth mFirebaseauth;
     private FirebaseAuth.AuthStateListener authStateListener;
-     private static final String TAG ="FacebookAuthentication";
-     private AccessTokenTracker accessTokenTracker;
+    private static final String TAG ="FacebookAuthentication";
+    private AccessTokenTracker accessTokenTracker;
     //private ImageView mlogo;
 
 
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user= firebaseAuth.getCurrentUser();
                 if(user!=null)
                 {
-                   updateUI(user);
+                    updateUI(user);
                 }
                 else
                 {
@@ -190,14 +190,14 @@ public class LoginActivity extends AppCompatActivity {
     {
         if(user!=null)
         {
-             userId.setText(user.getDisplayName());
-             if(user.getPhotoUrl()!=null)
-             {
-                 String photoUrl =user.getPhotoUrl().toString();
-                 photoUrl+="?type=large";
-                 //Picasso.get().load(photoUrl).into(mLogo);
+            userId.setText(user.getDisplayName());
+            if(user.getPhotoUrl()!=null)
+            {
+                String photoUrl =user.getPhotoUrl().toString();
+                photoUrl+="?type=large";
+                //Picasso.get().load(photoUrl).into(mLogo);
 
-             }
+            }
 
         }
         else
