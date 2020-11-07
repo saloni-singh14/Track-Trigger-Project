@@ -21,9 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Login extends Fragment {
@@ -88,15 +85,35 @@ public class Login extends Fragment {
                         if (dataSnapshot.exists()) {
 
                             String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
+                            String profFromDB=dataSnapshot.child(userEnteredUsername).child("profession").getValue(String.class);
                             if (passwordFromDB.equals(userEnteredPassword)) {
 
                                 String nameFromDB = dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
                                 String usernameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
-                                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                                Intent intent = new Intent(getApplicationContext(), DashboardHome.class);
+                                Intent intent1 = new Intent(getApplicationContext(), DashboardJob.class);
+                                Intent intent2 = new Intent(getApplicationContext(), DashboardWork.class);
+                                Intent intent3 = new Intent(getApplicationContext(), DashboardDefault.class);
+                                if (profFromDB.equals("Home Makers")){
                                 intent.putExtra("name", nameFromDB);
                                 intent.putExtra("username", usernameFromDB);
                                 intent.putExtra("password", passwordFromDB);
-                                startActivity(intent);
+                                startActivity(intent);}
+                                if (profFromDB.equals("Working Professionals")){
+                                intent1.putExtra("name", nameFromDB);
+                                intent1.putExtra("username", usernameFromDB);
+                                intent1.putExtra("password", passwordFromDB);
+                                startActivity(intent1);}
+                                if (profFromDB.equals("Job Seekers")){
+                                intent2.putExtra("name", nameFromDB);
+                                intent2.putExtra("username", usernameFromDB);
+                                intent2.putExtra("password", passwordFromDB);
+                                startActivity(intent2);}
+                                if (profFromDB.equals("Select Profession")||profFromDB.equals("others")){
+                                    intent3.putExtra("name", nameFromDB);
+                                    intent3.putExtra("username", usernameFromDB);
+                                    intent3.putExtra("password", passwordFromDB);
+                                    startActivity(intent3);}
                             } else {
                                 pass.setError("Wrong Password");
                                 pass.requestFocus();

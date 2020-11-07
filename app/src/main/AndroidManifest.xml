@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication3">
-        <activity android:name=".email"></activity>
+        <activity android:name=".DashboardDefault"></activity>
+        <activity android:name=".DashboardJob" />
+        <activity android:name=".DashboardWork" />
+        <activity android:name=".email" />
         <activity android:name=".verification" />
         <activity android:name=".OTP_verify" />
 
@@ -36,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Calender" />
-        <activity android:name=".Dashboard" />
+        <activity android:name=".DashboardHome" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

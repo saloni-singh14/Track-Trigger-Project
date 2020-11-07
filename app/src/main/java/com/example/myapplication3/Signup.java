@@ -9,17 +9,25 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Signup extends Fragment {
+public class Signup extends Fragment implements AdapterView.OnItemSelectedListener {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+    String[] userType = { "Select User Type", "Working Professionals",
+            "Job Seekers", "Home Makers","others"};
+
 
 
 
@@ -27,16 +35,29 @@ public class Signup extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root=(ViewGroup) inflater.inflate(R.layout.fragment_signup,container,false);
-        EditText mFullName,mUsername,mPassword,mPassword1,mProf;
+        EditText mFullName,mUsername,mPassword,mPassword1;
+        Spinner mProf;
         Button Registerbtn;
         float v=0;
 
-        mFullName=root.findViewById(R.id.mname);
+
+            mFullName=root.findViewById(R.id.mname);
         mPassword=root.findViewById(R.id.mpassword);
         mPassword1=root.findViewById(R.id.mpassword1);
         mUsername=root.findViewById(R.id.musername);
 
-        mProf=root.findViewById(R.id.mprof);
+        mProf=(Spinner)root.findViewById(R.id.mprof);
+        mProf.setOnItemSelectedListener(this);
+
+
+        ArrayAdapter ad= new ArrayAdapter(root.getContext(), android.R.layout.simple_spinner_item, userType);
+
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mProf.setAdapter(ad);
+
+
+
 
         Registerbtn=root.findViewById(R.id.regbtn);
 
@@ -72,8 +93,9 @@ public class Signup extends Fragment {
                 String password=mPassword.getText().toString().trim();
                 String password1=mPassword1.getText().toString().trim();
                 String fullname=mFullName.getText().toString().trim();
+                String profession=mProf.getSelectedItem().toString().trim();
 
-                String Profession=mProf.getText().toString().trim();
+
 
                 if(TextUtils.isEmpty(fullname)){
                     mFullName.setError("This is a required field");
@@ -120,25 +142,29 @@ public class Signup extends Fragment {
                     mPassword1.setError("Passwords do not match");
                     return;
                 }
-                if(TextUtils.isEmpty(Profession)){
-                    mProf.setError("This is a required field");
-                    return;
-                }
 
-                UserHelperClass helperClass = new UserHelperClass(fullname, username, password,Profession);
+
+                UserHelperClass helperClass = new UserHelperClass(fullname, username, password,profession);
                 reference.child(username).setValue(helperClass);
-
-
 
                 Intent intent=new Intent(getActivity(),verification.class);
                 startActivity(intent);
 
-
-
-
             }});
 
+
         return root;
+
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
