@@ -26,12 +26,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class OTP_verify extends AppCompatActivity {
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+    String email,fullname,profession,phone;
 
 
     private EditText code1,code2,code3,code4,code5,code6;
     private String verificationId;
-
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +56,21 @@ public class OTP_verify extends AppCompatActivity {
         final ProgressBar progressBar = findViewById(R.id.progress);
         final Button buttonverify = findViewById(R.id.buttonverify);
         verificationId = getIntent().getStringExtra("verificationId");
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+        username=intent.getStringExtra("username");
+        String password=intent.getStringExtra("password");
+        fullname=intent.getStringExtra("fullname");
+        profession=intent.getStringExtra("profession");
+        phone=intent.getStringExtra("mobile");
+        String message=intent.getStringExtra("message");
+
+
         buttonverify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                rootNode = FirebaseDatabase.getInstance();
+                reference = rootNode.getReference("users");
                 if (code1.getText().toString().trim().isEmpty() || code2.getText().toString().trim().isEmpty() || code3.getText().toString().trim().isEmpty() || code4.getText().toString().trim().isEmpty() ||
                         code5.getText().toString().trim().isEmpty() || code6.getText().toString().trim().isEmpty()) {
                     Toast.makeText(OTP_verify.this, "please enter valid code", Toast.LENGTH_SHORT).show();
@@ -73,9 +90,25 @@ public class OTP_verify extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     buttonverify.setVisibility(View.VISIBLE);
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getApplicationContext(), email.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
+                                        if(message.equals("whatdo?"))
+                                        {
+                                            updateOldUserData();
+                                        }
+                                        else {
+                                            UserHelperClass helperClass = new UserHelperClass(fullname, username, password, email, profession, phone);
+                                            reference.child(username).setValue(helperClass);
+                                            Intent intent3 = new Intent(OTP_verify.this, DashboardDefault.class);
+                                            intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            intent3.putExtra("username", username);
+                                            intent3.putExtra("password", password);
+                                            intent3.putExtra("fullname", fullname);
+                                            intent3.putExtra("profession", profession);
+                                            intent3.putExtra("phone", phone);
+                                            intent3.putExtra("email", email);
+                                            startActivity(intent3);
+                                        }
+
+
                                     } else {
                                         Toast.makeText(OTP_verify.this, "the verification code entered is incorrect", Toast.LENGTH_SHORT).show();
                                     }
@@ -119,7 +152,17 @@ public class OTP_verify extends AppCompatActivity {
         });
     }
 
+    private void updateOldUserData() {
+        Intent intent =new Intent(getApplicationContext(),SetnewPassword.class);
+        intent.putExtra("username",username);
 
+        intent.putExtra("fullname", fullname);
+        intent.putExtra("profession", profession);
+        intent.putExtra("phone", phone);
+        intent.putExtra("email", email);
+        startActivity(intent);
+        finish();
+    }
 
 
     private void setupOTPinputs()

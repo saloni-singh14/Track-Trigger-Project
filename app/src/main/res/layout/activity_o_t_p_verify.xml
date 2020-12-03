@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg6"
+    android:background="@drawable/whitebgd"
     android:overScrollMode="never"
     android:scrollbars="none"
     tools:context=".OTP_verify">
@@ -20,14 +20,14 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginTop="80dp"
-            android:src="@drawable/img1"
+            android:src="@drawable/tt_not_track_trigger"
             android:contentDescription="@string/app_name" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/aclonica"
+            android:fontFamily="@font/roboto"
             android:text="@string/otp_verification"
             android:textColor="@color/colorTextPrimary"
             android:textSize="20sp"

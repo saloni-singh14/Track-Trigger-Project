@@ -1,8 +1,5 @@
 package com.example.myapplication3;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -23,6 +23,12 @@ public class  verification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+        String username=intent.getStringExtra("username");
+        String password=intent.getStringExtra("password");
+        String fullname=intent.getStringExtra("fullname");
+        String profession=intent.getStringExtra("profession");
 
         final EditText inputMobile =findViewById(R.id.inputmobile);
         Button buttongetotp = findViewById(R.id.buttonotp);
@@ -66,6 +72,11 @@ public class  verification extends AppCompatActivity {
                                 Intent intent =new Intent(getApplicationContext(),OTP_verify.class);
                                 intent.putExtra("mobile",inputMobile.getText().toString());
                                 intent.putExtra("verificationId",verificationId);
+                                intent.putExtra("username", username);
+                                intent.putExtra("password", password);
+                                intent.putExtra("fullname", fullname);
+                                intent.putExtra("profession", profession);
+                                intent.putExtra("email", email);
                                 startActivity(intent);
                             }
                         }

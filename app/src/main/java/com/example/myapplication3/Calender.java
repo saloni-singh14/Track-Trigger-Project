@@ -36,7 +36,6 @@ public class Calender extends AppCompatActivity {
                                     int month,
                                     int dayOfMonth)
                             {
-
                                 // Store the value of date with
                                 // format in String type Variable
                                 // Add 1 in month because month
