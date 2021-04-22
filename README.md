@@ -4,3 +4,4 @@
  <p>Course project for Object-Oriented programming(CS F213) </p>
 [Project Report](https://github.com/saloni-singh14/Track-Trigger-Project/blob/master/25%20(1).pdf)
 <p>[link text itself]: http://www.reddit.com</p>
+<a href="https://github.com/saloni-singh14/Track-Trigger-Project/blob/master/25%20(1).pdf" target="_top">Download Page</a>
